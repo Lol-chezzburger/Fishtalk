@@ -1,0 +1,10 @@
+fish:{printfunction}:
+  fsttvr(0)snd(1)
+    rone=:[Hello world!]:
+  +=/-(skip)status=:[failed]:
+sleep
+
+fish:{failed}:
+  rone=:[failed???]:
+sleep
+
