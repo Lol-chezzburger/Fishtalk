@@ -1,5 +1,5 @@
 fish:{printfunction}:
-  fsttvr(0)snd(1)
+  fsttvrHR(0)SND(1)
     rone=:[Hello world!]:
   +=/-(skip)status=:[failed]:
     play:{[failed]}:function
@@ -9,7 +9,7 @@ fish:{failed}:
   rone=:[failed???]:
 sleepsineloop
 
---=\*(ignore) Colours:
+--=\*(ignore)::[currlne]::"[colours]"
 fish:{paintfunction}:
   paintR(20)G(50)B(10)
 sleepsineloop
