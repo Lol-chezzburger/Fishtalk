@@ -1,4 +1,4 @@
-los Bern.png = Bern
+los Bern.txt = Bern
 
 town(Example)
   
