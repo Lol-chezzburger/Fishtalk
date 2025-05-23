@@ -2,11 +2,12 @@ fish:{printfunction}:
   fsttvr(0)snd(1)
     rone=:[Hello world!]:
   +=/-(skip)status=:[failed]:
-sleep
+    play:{[failed]}:function
+sleepcosloop
 
 fish:{failed}:
   rone=:[failed???]:
-sleepcosloop
+sleepsineloop
 
 --=\*(ignore) Colours:
 fish:{paintfunction}:
