@@ -6,5 +6,9 @@ sleep
 
 fish:{failed}:
   rone=:[failed???]:
-sleep
+sleepcosloop
 
+--=\*(ignore) Colours:
+fish:{paintfunction}:
+  paintR(20)G(50)B(10)
+sleepsineloop
