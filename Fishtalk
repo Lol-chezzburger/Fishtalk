@@ -1,17 +1,33 @@
+--=[text]=--
 #h3-(TimesNewRoman)=:[FISHtalk]:
 
 fish:{printfunction}:
-  fsttvrHR(0)SND(1)
+  fsttvrSND(1)
     rone=:[Hello world!]:
-  +=/-(skip)status=:[failed]:
-    play:{[failed]}:function
-sleepcosloop
+  fsttvrSND(1)
+begun+:{paintfunction}:
++=/+status=:[failed]:(forward)
+sleepsineloop
 
 fish:{failed}:
   rone=:[failed???]:
 sleepsineloop
 
---=\*(ignore)::[currlne]::"[colours]"
+--=[Colours section]=--
 fish:{paintfunction}:
   paintR(20)G(50)B(10)
 sleepsineloop
+
+--=[basic commands list]=--
+--=[
+"fish:{text}:" is the function head
+"sleepsineloop" end without looping
+"sleepcosloop" end with looping
+"errorjustify:():"
+"rone=:[text]:" prints text in brackets
+"+==+status=:[failed/passed]:(plynextsleep)" is like "if true then"
+"+=/+status=:[failed/passed]:(forward)" is like "if false then"
+"paintR(#)G(#)B(#)" prints a colour
+"fsttvr" is the wait command
+add HR(#) for hours and SND(#) for seconds
+]=--
