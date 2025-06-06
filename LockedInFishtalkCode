@@ -1,55 +1,55 @@
 --=[basics]=--
-h3-(TimesNewRoman)=:[FISHtalk]:
+h3-(TimesNewRoman)=:[LockedInFishtalk]:
 
-fish:{printfunction}:
-  fsttvr(1)hz
-    rone=:[Hello world!]:
-  fsttvr(1)hz
-begun+:{paintfunction}:
+function:{printfunction}:
+  wait(1)hz
+    print=:[Hello world!]:
+  wait(1)hz
+begin+:{paintfunction}:
 +=/+status=:[failed]:(forward)
-sleepsineloop
+endnoloop
 
-fish:{failed}:
-  rone=:[failed???]:
-sleepsineloop
+function:{failed}:
+  print=:[failed???]:
+endnoloop
 
 --=[Colours section]=--
-fish:{paintfunction}:
+function:{paintfunction}:
   paintR(20)G(50)B(10)
-sleepsineloop
+endnoloop
 
 --=[basic commands list]=--
 --=[
-"--=[text]=--" the ignore this command, anything in it gets ignored.
+"--=[text]=--" the ignore this command, anything in it gets ignored like comments or guides.
 "h1/2/3-(font)=:[text]:" prints text in brackets as a header. (only seen in the code)
-"fish:{text}:" is the function head
-"fsttvr(#)hz" is the wait command
-"rone=:[text]:" prints text in brackets
-"begun+:{text}:" starts a new function while reading the code.
+"function:{text}:" is the function head
+"wait(#)hz" is the wait command
+"print=:[text]:" prints text in brackets
+"begin+:{text}:" starts a new function while reading the code.
 "+==+status=:[failed/passed]:(forward/plynextsleep)" is like "if true then"
 "+=/+status=:[failed/passed]:(forward/plynextsleep)" is like "if false then"
-"sleepsineloop" end without looping
+"endnoloop" end without looping
 "paintR(#)G(#)B(#)" prints a colour
 ]=--
 
- --=[more advanced?]=--
+ --=[more advanced? Mostly game stuff and math things here]=--
 convert ID1 = unitused(imperial-inch)
-fish:{spawnshapefunction}:
+function:{spawnshapefunction}:
   summon{shape3d}:[square]:-{local:0,0,0:}-
-sleepsineloop
+endnoloop
 
-fish:{shapesize}:
+function:{shapesize}:
 search(square)
 +==+status=:[failed/passed]:(forward/plynextsleep)
 mathrandomX(-5,5)unit:"ID1"
 mathrandomY(-5,5)unit:"ID1"
 mathrandomZ(-5,5)unit:"ID1"
-fsttvr(2.9)hz
-sleepcosloop
+wait(2.9)hz
+endyesloop
 
-breathingat(2.8)hz
-errorjustify(3)hz
-errorjustify>=breathingat
+heartbeat(2.8)hz
+errorleniency(3)hz
+errorleniency>=heartbeat
 errortickmax(3)
 errortickclear(60)hz
 --=[next set of commands]=--
@@ -59,10 +59,10 @@ errortickclear(60)hz
 "summon{shape3d/shape2d/mesh}:[square/shpere/cylinder/cube/wedge/meshname]:-{local:x,y,z}-" can summon a shape or mesh (requires a 3d and/or 2d space to work)
 "search(item/file)" can be used to find files or shapes (shapes require a 3d or 2d space)
 "mathrandomize(#,#)" makes a random number. add X, Y, or Z before brackets to change in one direction, add 'unit:' to the end for size or position changes 
-"sleepcosloop" end with looping, dependent on 'breathingat(#)bpm'
-"breathingat(#)hz" any code using the 'sleepcosloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
-"errorjustify(#)hz" the tolerance of error offput dependent on 'breathingat(#)bpm', can't be lower then the 'breathingat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
-"errorjustify>=breathingat" if the errorjustify is not at or more then breathingat, it force stops the program.
+"endyesloop" end with looping, dependent on 'heartbeat(#)bpm'
+"heartbeat(#)hz" any code using the 'endyesloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
+"errorleniency(#)hz" the tolerance of error offput dependent on 'heartbeat(#)bpm', can't be lower then the 'heartbeat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
+"errorleniency>=heartbeat" if the errorleniency is not at or more then heartbeat, it force stops the program.
 "errortickmax(#)" number of times that the error can happen before stoping all processes.
 "errortickclear(60/240/540/1080)hz" times are hard coded, waits 1, 3, 5, or 10 minutes and clears the warning ticks after time is met.
 ]=--
