@@ -1,16 +1,15 @@
 (* Main structure: sequence of statements *)
 program             = { statement } ;
 
-(* Possible statements *)
 statement           = manual_comment
-                    | function_def
                     | header_command
+                    | function_def
                     | wait_command
                     | print_command
+                    | color_command
                     | function_start
                     | conditional_command
                     | end_command
-                    | color_command
                     | variable_assign
                     | unit_command
                     | summon_command
@@ -22,13 +21,13 @@ statement           = manual_comment
 (* Manual/explanation sections, ignored by parser *)
 manual_comment      = "--=[", { any_char_excluding("]=--") }, "]=--" ;
 
+(* Headers for organization (not executed) *)
+header_command      = header_level, "-", "(", identifier, ")=:[", text, "]:" ;
+header_level        = "h1" | "h2" | "h3" ;
+
 (* Function definition *)
 function_def        = "fish:{", identifier, "}:", { indented_statement } ;
 indented_statement  = indent, statement ;
-
-(* Header command *)
-header_command      = header_level, "-", "(", identifier, ")=:[", text, "]:" ;
-header_level        = "h1" | "h2" | "h3" ;
 
 (* Wait command *)
 wait_command        = "fsttvr(", number, ")" ;
@@ -36,39 +35,44 @@ wait_command        = "fsttvr(", number, ")" ;
 (* Print command *)
 print_command       = "rone=:[" , text , "]:" ;
 
-(* Function start command *)
-function_start      = "begun+:{", identifier, "}:" ;
-
-(* Conditional commands *)
-conditional_command = ("+==+" | "+=/+"), "status=:[" , status, "]:" , "(" , action , ")" ;
-
-(* End commands *)
-end_command         = "sleepsineloop" | "sleepcosloop" ;
-
-(* Colour/paint command *)
+(* Color/paint command *)
 color_command       = "paintR(", number, ")G(", number, ")B(", number, ")" ;
 
-(* Variable and unit assignment *)
+(* Start another function while reading code *)
+function_start      = "begun+:{", identifier, "}:" ;
+
+(* If/else conditional commands *)
+conditional_command = ("+==+" | "+=/+"), "status=:[" , status, "]:" , "(" , action , ")" ;
+
+(* Function/loop enders *)
+end_command         = "sleepsineloop" | "sleepcosloop" ;
+
+(* Variable assignment (code as variable) *)
 variable_assign     = "convert", identifier, "=", unit_command ;
+
+(* Unit system command *)
 unit_command        = "unitused(", identifier, "-", identifier, ")" ;
 
-(* Summon shape/mesh *)
-summon_command      = "summon{", identifier, "}:[", identifier, "]:-{local:", number, ",", number, ",", number, "}-" ;
+(* Shape/mesh summoning *)
+summon_command      = "summon{", shape_type, "}:[", shape_name, "]:-{local:", number, ",", number, ",", number, "}-" ;
+shape_type          = identifier ;
+shape_name          = identifier ;
 
-(* Search command *)
+(* File or shape search *)
 search_command      = "search(", identifier, ")" ;
 
-(* Math random command *)
-math_command        = "mathrandom" , ( "X" | "Y" | "Z" ), "(", number, ",", number, ")", "unit:\"", identifier, "\"" ;
+(* Random math for X/Y/Z directions *)
+math_command        = "mathrandom" , direction, "(", number, ",", number, ")", "unit:\"", identifier, "\"" ;
+direction           = "X" | "Y" | "Z" ;
 
-(* Heartbeat and timing control commands *)
+(* Heartbeat/timing and error control *)
 heartbeat_command   = "breathingat(", number, ")hz"
                     | "errorjustify(", number, ")hz"
                     | "errorjustify>=breathingat"
                     | "errortickmax(", number, ")"
                     | "errortickclear(", number, ")hz" ;
 
-(* Status and action for conditionals *)
+(* Status and actions for conditionals *)
 status              = "failed" | "passed" ;
 action              = "forward" | "plynextsleep" ;
 
