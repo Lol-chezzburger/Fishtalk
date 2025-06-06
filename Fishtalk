@@ -1,5 +1,5 @@
 --=[basics]=--
-#h3-(TimesNewRoman)=:[FISHtalk]:
+h3-(TimesNewRoman)=:[FISHtalk]:
 
 fish:{printfunction}:
   fsttvr(1)
@@ -20,6 +20,7 @@ sleepsineloop
 
 --=[basic commands list]=--
 --=[
+"h1/2/3-(font)=:[text]:" prints text in brackets as a header. (only seen in the code)
 "fish:{text}:" is the function head
 "fsttvr(#)" is the wait command
 "rone=:[text]:" prints text in brackets
