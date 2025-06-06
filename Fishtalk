@@ -33,9 +33,18 @@ sleepsineloop
 ]=--
 
  --=[more advanced?]=--
+convert ID1 = unitused(imperial-inch)
 fish:{spawnshapefunction}:
-  summon{shape}:[square]:-{local:0,0,0:}-
+  summon{shape3d}:[square]:-{local:0,0,0:}-
 fsttvr(2.9)
+sleepsineloop
+
+fish:{shapesize}:
+search(square)
++==+status=:[failed/passed]:(forward/plynextsleep)
+mathrandomX(-5,5)unit:"ID1"
+mathrandomY(-5,5)unit:"ID1"
+mathrandomZ(-5,5)unit:"ID1"
 sleepcosloop
 
 breathingat(2.8)bpm
@@ -43,7 +52,11 @@ errorjustify:(3):
 errortick(3)
 --=[next set of commands]=--
 --=[
-"summon{shape/mesh}:[square/shpere/cylinder/cube/wedge/meshname]:-{local:x,y,z}-" can summon a shape or mesh (requires a 3d space to work)
+"convert text = variable" saves code to run as a text name, needs to have code activate it to run
+"unitused(system-unittype)" picks that system to use as the type (metric or imperal) and uses the unittype as the unit base (centimeter(metric) or inch(imperial))
+"summon{shape3d/shape2d/mesh}:[square/shpere/cylinder/cube/wedge/meshname]:-{local:x,y,z}-" can summon a shape or mesh (requires a 3d and/or 2d space to work)
+"search(item/file)" can be used to find files or shapes (shapes require a 3d or 2d space)
+"mathrandomize(#,#)" makes a random number. add X, Y, or Z before brackets to change in one direction, add 'unit:' to the end for size or position changes 
 "sleepcosloop" end with looping, dependent on 'breathingat(#)bpm'
 "breathingat(#)bpm" any code using the 'sleepcosloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
 "errorjustify:(#):" the tolerance of error offput dependent on 'breathingat(#)bpm', can't be lower then the 'breathingat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
