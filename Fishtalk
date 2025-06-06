@@ -1,10 +1,10 @@
---=[text]=--
+--=[basics]=--
 #h3-(TimesNewRoman)=:[FISHtalk]:
 
 fish:{printfunction}:
-  fsttvrSND(1)
+  fsttvr(1)
     rone=:[Hello world!]:
-  fsttvrSND(1)
+  fsttvr(1)
 begun+:{paintfunction}:
 +=/+status=:[failed]:(forward)
 sleepsineloop
@@ -21,13 +21,29 @@ sleepsineloop
 --=[basic commands list]=--
 --=[
 "fish:{text}:" is the function head
-"sleepsineloop" end without looping
-"sleepcosloop" end with looping
-"errorjustify:():" the tolerance of error count
+"fsttvr(#)" is the wait command
 "rone=:[text]:" prints text in brackets
-"+==+status=:[failed/passed]:(plynextsleep)" is like "if true then"
-"+=/+status=:[failed/passed]:(forward)" is like "if false then"
+begun+:{paintfunction}:
+"+==+status=:[failed/passed]:(forward/plynextsleep)" is like "if true then"
+"+=/+status=:[failed/passed]:(forward/plynextsleep)" is like "if false then"
+"sleepsineloop" end without looping
 "paintR(#)G(#)B(#)" prints a colour
-"fsttvr" is the wait command
-add SND(#) for seconds
+]=--
+
+ --=[more advanced?]=--
+fish:{spawnshapefunction}:
+  summon{shape}:[square]:-{local:0,0,0:}-
+fsttvr(2.9)
+sleepcosloop
+
+breathingat(2.8)bpm
+errorjustify:(3):
+errortick(3)
+--=[next set of commands]=--
+--=[
+"summon{shape/mesh}:[square/shpere/cylinder/cube/wedge/meshname]:-{local:x,y,z}-" can summon a shape or mesh (requires a 3d space to work)
+"sleepcosloop" end with looping, dependent on 'breathingat(#)bpm'
+"breathingat(#)bpm" any code using the 'sleepcosloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
+"errorjustify:(#):" the tolerance of error offput dependent on 'breathingat(#)bpm', can't be lower then the 'breathingat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
+"errortick(#)" number of times that the error can happen before stoping all processes.
 ]=--
