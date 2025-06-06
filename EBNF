@@ -1,88 +1,87 @@
-(* The main program structure: a sequence of statements and/or section headers/comments *)
-program            = { statement } ;
+(* Main structure: sequence of statements *)
+program             = { statement } ;
 
-(* A statement is one of the following: *)
-statement          = manual_comment
-                   | function_def
-                   | header_command
-                   | wait_command
-                   | print_command
-                   | function_start
-                   | conditional_command
-                   | end_command
-                   | color_command
-                   | variable_assign
-                   | unit_command
-                   | summon_command
-                   | search_command
-                   | math_command
-                   | sleep_command
-                   | breathing_command
-                   | error_command
-                   | empty_line ;
+(* Possible statements *)
+statement           = manual_comment
+                    | function_def
+                    | header_command
+                    | wait_command
+                    | print_command
+                    | function_start
+                    | conditional_command
+                    | end_command
+                    | color_command
+                    | variable_assign
+                    | unit_command
+                    | summon_command
+                    | search_command
+                    | math_command
+                    | heartbeat_command
+                    | empty_line ;
 
-(* Manual/explanation sections, to be ignored by parser *)
-manual_comment     = "--=[", { any_char_excluding("]=--") }, "]=--" ;
+(* Manual/explanation sections, ignored by parser *)
+manual_comment      = "--=[", { any_char_excluding("]=--") }, "]=--" ;
 
 (* Function definition *)
-function_def       = "fish:{", identifier, "}:", { indented_statement } ;
+function_def        = "fish:{", identifier, "}:", { indented_statement } ;
+indented_statement  = indent, statement ;
 
-indented_statement = indent, statement ;
-
-(* Header line (for section titles or output) *)
-header_command     = header_level, "-", "(", identifier, ")", "=:[", text, "]:" ;
-header_level       = "h1" | "h2" | "h3" ;
+(* Header command *)
+header_command      = header_level, "-", "(", identifier, ")=:[", text, "]:" ;
+header_level        = "h1" | "h2" | "h3" ;
 
 (* Wait command *)
-wait_command       = "fsttvr(", number, ")" ;
+wait_command        = "fsttvr(", number, ")" ;
 
 (* Print command *)
-print_command      = "rone=:[" , text , "]:" ;
+print_command       = "rone=:[" , text , "]:" ;
 
-(* Start a new function block *)
-function_start     = "begun+:{", identifier, "}:" ;
+(* Function start command *)
+function_start      = "begun+:{", identifier, "}:" ;
 
 (* Conditional commands *)
 conditional_command = ("+==+" | "+=/+"), "status=:[" , status, "]:" , "(" , action , ")" ;
 
 (* End commands *)
-end_command        = "sleepsineloop" | "sleepcosloop" ;
+end_command         = "sleepsineloop" | "sleepcosloop" ;
 
-(* Paint/color command *)
-color_command      = "paintR(", number, ")G(", number, ")B(", number, ")" ;
+(* Colour/paint command *)
+color_command       = "paintR(", number, ")G(", number, ")B(", number, ")" ;
 
-(* Variable assignment and unit selection *)
-variable_assign    = "convert", identifier, "=", unit_command ;
-unit_command       = "unitused(", identifier, "-", identifier, ")" ;
+(* Variable and unit assignment *)
+variable_assign     = "convert", identifier, "=", unit_command ;
+unit_command        = "unitused(", identifier, "-", identifier, ")" ;
 
-(* Summon a 3D/2D shape or mesh *)
-summon_command     = "summon{", identifier, "}:[", identifier, "]:-{local:", number, ",", number, ",", number, "}-" ;
+(* Summon shape/mesh *)
+summon_command      = "summon{", identifier, "}:[", identifier, "]:-{local:", number, ",", number, ",", number, "}-" ;
 
 (* Search command *)
-search_command     = "search(", identifier, ")" ;
+search_command      = "search(", identifier, ")" ;
 
-(* Math/random command *)
-math_command       = "mathrandom" , ( "X" | "Y" | "Z" ), "(", number, ",", number, ")", "unit:\"", identifier, "\"" ;
+(* Math random command *)
+math_command        = "mathrandom" , ( "X" | "Y" | "Z" ), "(", number, ",", number, ")", "unit:\"", identifier, "\"" ;
 
-(* Breathing and error commands *)
-breathing_command  = "breathingat(", number, ")bpm" ;
-error_command      = "errorjustify:(", number, "):"
-                   | "errortick(", number, ")" ;
+(* Heartbeat and timing control commands *)
+heartbeat_command   = "breathingat(", number, ")hz"
+                    | "errorjustify(", number, ")hz"
+                    | "errorjustify>=breathingat"
+                    | "errortickmax(", number, ")"
+                    | "errortickclear(", number, ")hz" ;
 
-(* Status and action for conditional commands *)
-status             = "failed" | "passed" ;
-action             = "forward" | "plynextsleep" ;
+(* Status and action for conditionals *)
+status              = "failed" | "passed" ;
+action              = "forward" | "plynextsleep" ;
 
 (* Terminals *)
-identifier         = letter, { letter | digit | "_" } ;
-number             = digit, { digit } | digit, { digit }, ".", { digit } ;
-text               = { any_char_excluding("]:") } ;
-indent             = "  " | "\t" ;
-empty_line         = { whitespace }, newline ;
+identifier          = letter, { letter | digit | "_" } ;
+number              = digit, { digit } | digit, { digit }, ".", { digit } ;
+text                = { any_char_excluding("]:") } ;
+indent              = "  " | "\t" ;
+empty_line          = { whitespace }, newline ;
 
-(* Basic character definitions *)
-letter             = "A".."Z" | "a".."z" ;
-digit              = "0".."9" ;
-whitespace         = " " | "\t" ;
-newline            = "\n" | "\r\n" ;
-any_char_excluding(x) = ? any character except those in x ? ;
+(* Character definitions *)
+letter              = "A".."Z" | "a".."z" ;
+digit               = "0".."9" ;
+whitespace          = " " | "\t" ;
+newline             = "\n" | "\r\n" ;
+any_char_excluding(x)= ? any character except those in x ? ;
