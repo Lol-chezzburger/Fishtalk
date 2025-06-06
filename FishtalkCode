@@ -36,7 +36,6 @@ sleepsineloop
 convert ID1 = unitused(imperial-inch)
 fish:{spawnshapefunction}:
   summon{shape3d}:[square]:-{local:0,0,0:}-
-fsttvr(2.9)
 sleepsineloop
 
 fish:{shapesize}:
@@ -45,11 +44,14 @@ search(square)
 mathrandomX(-5,5)unit:"ID1"
 mathrandomY(-5,5)unit:"ID1"
 mathrandomZ(-5,5)unit:"ID1"
+fsttvr(2.9)
 sleepcosloop
 
-breathingat(2.8)bpm
-errorjustify:(3):
-errortick(3)
+breathingat(2.8)hz
+errorjustify(3)hz
+errorjustify>=breathingat
+errortickmax(3)
+errortickclear(60)hz
 --=[next set of commands]=--
 --=[
 "convert text = variable" saves code to run as a text name, needs to have code activate it to run
@@ -58,7 +60,9 @@ errortick(3)
 "search(item/file)" can be used to find files or shapes (shapes require a 3d or 2d space)
 "mathrandomize(#,#)" makes a random number. add X, Y, or Z before brackets to change in one direction, add 'unit:' to the end for size or position changes 
 "sleepcosloop" end with looping, dependent on 'breathingat(#)bpm'
-"breathingat(#)bpm" any code using the 'sleepcosloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
-"errorjustify:(#):" the tolerance of error offput dependent on 'breathingat(#)bpm', can't be lower then the 'breathingat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
-"errortick(#)" number of times that the error can happen before stoping all processes.
+"breathingat(#)hz" any code using the 'sleepcosloop' will update at this speed as the minimum wait time. any function going too fast for this will be forced to wait.
+"errorjustify(#)hz" the tolerance of error offput dependent on 'breathingat(#)bpm', can't be lower then the 'breathingat(#)bpm' var. If a function is not updating after the breathing but after the error, it will add a error tick. 
+"errorjustify>=breathingat" if the errorjustify is not at or more then breathingat, it force stops the program.
+"errortickmax(#)" number of times that the error can happen before stoping all processes.
+"errortickclear(60/240/540/1080)hz" times are hard coded, waits 1, 3, 5, or 10 minutes and clears the warning ticks after time is met.
 ]=--
