@@ -2,9 +2,9 @@
 h3-(TimesNewRoman)=:[FISHtalk]:
 
 fish:{printfunction}:
-  fsttvr(1)
+  fsttvr(1)hz
     rone=:[Hello world!]:
-  fsttvr(1)
+  fsttvr(1)hz
 begun+:{paintfunction}:
 +=/+status=:[failed]:(forward)
 sleepsineloop
@@ -23,7 +23,7 @@ sleepsineloop
 "--=[text]=--" the ignore this command, anything in it gets ignored.
 "h1/2/3-(font)=:[text]:" prints text in brackets as a header. (only seen in the code)
 "fish:{text}:" is the function head
-"fsttvr(#)" is the wait command
+"fsttvr(#)hz" is the wait command
 "rone=:[text]:" prints text in brackets
 "begun+:{text}:" starts a new function while reading the code.
 "+==+status=:[failed/passed]:(forward/plynextsleep)" is like "if true then"
@@ -44,7 +44,7 @@ search(square)
 mathrandomX(-5,5)unit:"ID1"
 mathrandomY(-5,5)unit:"ID1"
 mathrandomZ(-5,5)unit:"ID1"
-fsttvr(2.9)
+fsttvr(2.9)hz
 sleepcosloop
 
 breathingat(2.8)hz
