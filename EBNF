@@ -1,1 +1,68 @@
+(* Top-level program structure *)
+program           = section { section } ;
 
+section           = section_header { statement } ;
+section_header    = "--=[" , section_name , "]=--" ;
+section_name      = identifier ;
+
+(* Statements *)
+statement         = ignore_command
+                  | header_command
+                  | function_def
+                  | command
+                  | comment ;
+
+ignore_command    = "--=[", text, "]=--" ;
+
+header_command    = header_level , "-" , "(" , font , ")" , "=:" , "[" , text , "]" , ":" ;
+header_level      = "h1" | "h2" | "h3" ;
+font              = identifier ;
+
+function_def      = "fish:{", function_name , "}:" , { function_body } ;
+
+function_body     = statement ;
+
+command           = wait_command
+                  | print_command
+                  | function_start
+                  | conditional_command
+                  | end_command
+                  | color_command
+                  | variable_assign
+                  | unit_command
+                  | summon_command
+                  | search_command
+                  | math_command
+                  | sleep_command
+                  | breathing_command
+                  | error_command ;
+
+wait_command      = "fsttvr(" , number , ")" ;
+print_command     = "rone=:[" , text , "]:" ;
+function_start    = "begun+:{", function_name , "}:" ;
+conditional_command = ("+==+" | "+=/" ) , "status=:[" , status , "]:" , "(" , action , ")" ;
+end_command       = "sleepsineloop" ;
+color_command     = "paintR(" , number , ")G(" , number , ")B(" , number , ")" ;
+variable_assign   = "convert" , identifier , "=" , text ;
+unit_command      = "unitused(" , system_type , "-" , unit_type , ")" ;
+summon_command    = "summon{" , shape_type , "}:[" , shape_name , "]" , "-{" , "local:" , number , "," , number , "," , number , "}-" ;
+search_command    = "search(" , ( identifier | file_name ) , ")" ;
+math_command      = "mathrandom" , [ "X" | "Y" | "Z" ] , "(", number , "," , number , ")" , [ "unit:" , identifier ] ;
+sleep_command     = "sleepcosloop" ;
+breathing_command = "breathingat(" , number , ")bpm" ;
+error_command     = "errorjustify:(" , number , "):"
+                  | "errortick(" , number , ")" ;
+
+(* Terminals *)
+status            = "failed" | "passed" ;
+action            = "forward" | "plynextsleep" ;
+system_type       = "imperial" | "metric" ;
+unit_type         = "inch" | "centimeter" ;
+shape_type        = "shape3d" | "shape2d" | "mesh" ;
+shape_name        = identifier ;
+function_name     = identifier ;
+file_name         = identifier ;
+identifier        = ? any valid identifier ? ;
+text              = ? any text (non-greedy) ? ;
+number            = ? integer or float ? ;
+comment           = "--", [^=], { any character except newline } ;
