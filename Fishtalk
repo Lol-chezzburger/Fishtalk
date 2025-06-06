@@ -23,11 +23,11 @@ sleepsineloop
 "fish:{text}:" is the function head
 "sleepsineloop" end without looping
 "sleepcosloop" end with looping
-"errorjustify:():"
+"errorjustify:():" the tolerance of error count
 "rone=:[text]:" prints text in brackets
 "+==+status=:[failed/passed]:(plynextsleep)" is like "if true then"
 "+=/+status=:[failed/passed]:(forward)" is like "if false then"
 "paintR(#)G(#)B(#)" prints a colour
 "fsttvr" is the wait command
-add HR(#) for hours and SND(#) for seconds
+add SND(#) for seconds
 ]=--
