@@ -20,7 +20,7 @@ sleepsineloop
 
 --=[basic commands list]=--
 --=[
-"--=[text]=--" the ignore this command, anything it it is ignored.
+"--=[text]=--" the ignore this command, anything in it gets ignored.
 "h1/2/3-(font)=:[text]:" prints text in brackets as a header. (only seen in the code)
 "fish:{text}:" is the function head
 "fsttvr(#)" is the wait command
